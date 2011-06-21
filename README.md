@@ -18,3 +18,9 @@ You can also pass in query parameters to restrict the results:
 And if there are additional pages of results, access them too:
 
     second_page = client.messages(:q => 'pub').next_page
+
+It's possible to delete messages, and mark them as favourites:
+
+    client.contacts.first.messages.first.delete!
+    client.messages.first.favourite!
+    client.messages.first.unfavourite!
