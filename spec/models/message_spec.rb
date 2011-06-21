@@ -7,6 +7,7 @@ describe Hashblue::Message do
 
   subject do
     Hashblue::Message.new(client, {
+      'uri' => 'https://api.example.com/messages/abcdef123456',
       'sent' => true,
       'favourite' => false,
       'contact' => {
@@ -20,6 +21,13 @@ describe Hashblue::Message do
       subject.contact.should eql(Hashblue::Contact.new(client, {
         'messages' => 'https://api.example.com/contacts/2/messages'
       }))
+    end
+  end
+
+  describe '#delete!' do
+    it "sends a delete request to the message uri" do
+      client.expects(:delete).with('https://api.example.com/messages/abcdef123456')
+      subject.delete!
     end
   end
 end

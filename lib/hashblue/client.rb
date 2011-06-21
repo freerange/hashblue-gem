@@ -40,14 +40,22 @@ module Hashblue
     end
 
     def get(path, query = {})
-      response = self.class.get path, :query => query, :headers => request_headers
+      request :get, path, query
+    end
+
+    def delete(path, query = {})
+      request :delete, path, query
+    end
+
+    private
+
+    def request(method, path, query, body = nil)
+      response = self.class.send method, path, :query => query, :headers => request_headers
       case response.headers["status"]
       when "200" then response.to_hash
       else raise RequestError, "request unsuccessful: #{response.to_hash.inspect}"
       end
     end
-
-    private
 
     def request_headers
       {"Authorization" => "OAuth #{access_token}", 'Accept' => 'application/json'}
