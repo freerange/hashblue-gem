@@ -28,15 +28,11 @@ module Hashblue
     end
 
     def load_messages(uri, query = {})
-      get(uri, query)["messages"].collect do |m|
-        Message.new(self, m)
-      end
+      Collection.new(self, Message, get(uri, query), "messages")
     end
 
     def load_contacts(uri, query = {})
-      get(uri, query)["contacts"].collect do |m|
-        Contact.new(self, m)
-      end
+      Collection.new(self, Contact, get(uri, query), "contacts")
     end
 
     def get(path, query = {})

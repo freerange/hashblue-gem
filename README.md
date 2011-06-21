@@ -14,3 +14,7 @@ Finally, use that client to start to navigate the API:
 You can also pass in query parameters to restrict the results:
 
     messages_abouts_pubs = client.messages(:q => 'pub')
+
+And if there are additional pages of results, access them too:
+
+    second_page = client.messages(:q => 'pub').next_page

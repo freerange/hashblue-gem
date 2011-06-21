@@ -64,4 +64,24 @@ describe Hashblue::Client do
       subject.contacts(:anything => :here)
     end
   end
+
+  describe '#load_messages(uri, query)' do
+    it "builds a Collection of messages with the response from the uri" do
+      response = {"messages" => [{"content" => "hello"}]}
+      subject.stubs(:get).returns(response)
+      collection = mock()
+      Hashblue::Collection.expects(:new).with(subject, Hashblue::Message, response, "messages").returns(collection)
+      subject.load_messages("/messages")
+    end
+  end
+
+  describe '#load_contacts(uri, query)' do
+    it "builds a Collection of contacts with the response from the uri" do
+      response = {"contacts" => [{"msisdn" => "1234"}]}
+      subject.stubs(:get).returns(response)
+      collection = mock()
+      Hashblue::Collection.expects(:new).with(subject, Hashblue::Contact, response, "contacts").returns(collection)
+      subject.load_contacts("/contacts")
+    end
+  end
 end
