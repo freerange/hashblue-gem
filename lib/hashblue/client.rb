@@ -3,7 +3,7 @@ require 'httparty'
 module Hashblue
   class Client
     class RequestError < StandardError; end
-    
+
     include HTTParty
 
     base_uri "https://api.hashblue.com"
@@ -45,6 +45,10 @@ module Hashblue
 
     def delete(path, query = {})
       request :delete, path, query
+    end
+
+    def put(path, query, body)
+      request :put, path, query, body
     end
 
     private

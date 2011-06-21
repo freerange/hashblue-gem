@@ -6,8 +6,24 @@ module Hashblue
       @contact ||= Contact.new(client, @attributes["contact"])
     end
 
+    def favourite?
+      @attributes["favourite"]
+    end
+
     def delete!
       client.delete(uri)
+    end
+
+    def favourite!
+      client.put(uri + '/favourite', {}, {})
+      @attributes['favourite'] = true
+      true
+    end
+
+    def unfavourite!
+      client.delete(uri + '/favourite')
+      @attributes['favourite'] = false
+      true
     end
   end
 end
