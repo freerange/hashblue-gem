@@ -65,6 +65,18 @@ describe Hashblue::Client do
     end
   end
 
+  describe '#favourites(query = {})' do
+    it "loads messages from '/messages/favourites'" do
+      subject.expects(:load_messages).with('/messages/favourites', {}).returns([:favourite_messages])
+      subject.favourites.should eql([:favourite_messages])
+    end
+
+    it "passes query through to load_messages" do
+      subject.expects(:load_messages).with('/messages/favourites', {:anything => :here})
+      subject.favourites(:anything => :here)
+    end
+  end
+
   describe '#load_messages(uri, query)' do
     it "builds a Collection of messages with the response from the uri" do
       response = {"messages" => [{"content" => "hello"}]}

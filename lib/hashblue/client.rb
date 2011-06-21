@@ -23,6 +23,10 @@ module Hashblue
       load_messages("/messages", query)
     end
 
+    def favourites(query = {})
+      load_messages("/messages/favourites", query)
+    end
+
     def contacts(query = {})
       load_contacts("/contacts", query)
     end
