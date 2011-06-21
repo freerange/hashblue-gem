@@ -22,6 +22,12 @@ describe Hashblue::Message do
     end
   end
 
+  describe 'sent?' do
+    it "returns the 'sent' attribute" do
+      subject.sent?.should be_true
+    end
+  end
+
   describe '#contact' do
     it "returns Contact built with contact attributes" do
       subject.contact.should eql(Hashblue::Contact.new(client, {

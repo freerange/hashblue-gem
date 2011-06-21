@@ -6,6 +6,10 @@ module Hashblue
       @contact ||= Contact.new(client, @attributes["contact"])
     end
 
+    def sent?
+      @attributes["sent"]
+    end
+
     def favourite?
       @attributes["favourite"]
     end
