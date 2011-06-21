@@ -18,11 +18,4 @@ describe Hashblue::Contact do
       subject.messages.should eql([:some_messages])
     end
   end
-
-  describe '#delete!' do
-    it "sends a delete request to the contact uri" do
-      client.expects(:delete).with('https://api.example.com/contacts/abcdef123456')
-      subject.delete!
-    end
-  end
 end

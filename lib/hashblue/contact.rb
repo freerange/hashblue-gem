@@ -9,9 +9,5 @@ module Hashblue
     def messages_uri
       @attributes["messages"]
     end
-
-    def delete!
-      client.delete(uri)
-    end
   end
 end
