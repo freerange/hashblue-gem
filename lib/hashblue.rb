@@ -1,5 +1,3 @@
-require "hashblue/version"
-
 module Hashblue
   autoload :Account, 'hashblue/account'
   autoload :Client, 'hashblue/client'

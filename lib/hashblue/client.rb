@@ -1,4 +1,6 @@
 require 'httparty'
+require 'active_support/ordered_hash'
+require 'active_support/json'
 
 module Hashblue
   class Client
@@ -51,13 +53,23 @@ module Hashblue
       request :put, path, query, body
     end
 
+    def post(path, query, body)
+      request :post, path, query, body
+    end
+
     private
 
     def request(method, path, query, body = nil)
-      response = self.class.send method, path, :query => query, :headers => request_headers
-      case response.headers["status"]
-      when "200" then response.to_hash
-      else raise RequestError, "request unsuccessful: #{response.to_hash.inspect}"
+      options = {:query => query, :headers => request_headers}
+      if body
+        options[:headers]["Content-type"] = "application/json"
+        options[:body] = ActiveSupport::JSON.encode(body)
+      end
+
+      response = self.class.send method, path, options
+      case response.code
+      when 200, 201 then response.to_hash
+      else raise RequestError, "request unsuccessful: #{response.inspect}"
       end
     end
 

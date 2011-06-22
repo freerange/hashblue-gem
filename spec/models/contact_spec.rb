@@ -14,8 +14,15 @@ describe Hashblue::Contact do
 
   describe '#messages' do
     it "loads messages from its messages uri" do
-      client.expects(:load_messages).with('https://api.example.com/contact/1/messages', {}).returns([:some_messages])
+      client.expects(:load_messages).with(subject.messages_uri, {}).returns([:some_messages])
       subject.messages.should eql([:some_messages])
+    end
+  end
+
+  describe '#send_message(content)' do
+    it "posts message to messages_uri" do
+      client.expects(:post).with(subject.messages_uri, {}, {"message" => {"content" => "Hello!"}})
+      subject.send_message "Hello!"
     end
   end
 end

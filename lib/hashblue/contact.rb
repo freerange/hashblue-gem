@@ -9,5 +9,9 @@ module Hashblue
     def messages_uri
       @attributes["messages"]
     end
+
+    def send_message(content)
+      client.post messages_uri, {}, "message" => {"content" => content}
+    end
   end
 end

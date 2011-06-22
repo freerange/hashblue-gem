@@ -15,18 +15,18 @@ describe Hashblue::Client do
         :query => {
           :since => '2011-01-14T14:30Z'
         }
-      ).returns(mock(:headers => {"status" => "200"}, :to_hash => {}))
+      ).returns(mock(:code => 200, :to_hash => {}))
       subject.get "/messages", :since => '2011-01-14T14:30Z'
     end
 
-    it "raises RequestError if response status isn't 200" do
+    it "raises RequestError if response code isn't 200" do
       Hashblue::Client.expects(:get).with("/messages",
         :headers => {
           "Authorization" => "OAuth hashblue-access-token",
           "Accept" => "application/json"
         },
         :query => {}
-      ).returns(mock(:headers => {"status" => "401"}, :to_hash => {}))
+      ).returns(mock(:code => 500, :inspect => ""))
       lambda {subject.get "/messages"}.should raise_error(Hashblue::Client::RequestError)
     end
   end
