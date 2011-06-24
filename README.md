@@ -4,7 +4,9 @@ This gem provides an easy way to access the hashblue API (https://api.hashblue.c
 
 Using this gem is very straightforward.  First, you need to obtain an OAuth2 access token (see https://api.hashblue.com/doc/Authentication).  Then, create a new client:
 
-    account = Hashblue::Account.authenticate('oauth2-access-token')
+    account = Hashblue::Account.authenticate(
+      Hashblue::AccessToken.new('oauth2-access-token')
+    )
 
 Finally, use that client to start to navigate the API:
 
