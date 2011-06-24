@@ -5,5 +5,5 @@ module Hashblue
   autoload :Contact, 'hashblue/contact'
   autoload :Message, 'hashblue/message'
   autoload :Model, 'hashblue/model'
-  autoload :Version, 'hashblue/version'
+  autoload :VERSION, 'hashblue/version'
 end
