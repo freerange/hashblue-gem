@@ -4,20 +4,20 @@ This gem provides an easy way to access the hashblue API (https://api.hashblue.c
 
 Using this gem is very straightforward.  First, you need to obtain an OAuth2 access token (see https://api.hashblue.com/doc/Authentication).  Then, create a new client:
 
-    client = Hashblue::Client.new('oauth2-access-token')
+    account = Hashblue::Account.authenticate('oauth2-access-token')
 
 Finally, use that client to start to navigate the API:
 
-    contacts = client.account.contacts
+    contacts = account.contacts
     first_contact_messages = contacts.first.messages
 
 You can also pass in query parameters to restrict the results:
 
-    messages_abouts_pubs = client.messages(:q => 'pub')
+    messages_abouts_pubs = account.messages(:q => 'pub')
 
 And if there are additional pages of results, access them too:
 
-    second_page = client.messages(:q => 'pub').next_page
+    second_page = account.messages(:q => 'pub').next_page
 
 It's possible to delete messages, and mark them as favourites:
 

@@ -1,5 +1,13 @@
 module Hashblue
   class Account < Model
+    class << self
+      def authenticate(access_token)
+        client = Hashblue::Client.new(access_token)
+        response = client.get("/account")
+        Account.new(client, response["account"])
+      end
+    end
+
     attribute_methods :msisdn, :phone_number, :email
 
     def messages(query = {})

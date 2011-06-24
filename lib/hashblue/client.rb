@@ -13,27 +13,10 @@ module Hashblue
             'User-Agent' => "Hashblue Client Gem v#{Hashblue::VERSION} (https://github.com/freerange/hashblue-gem)"
 
 
-    attr_reader :access_token, :refresh_token
+    attr_reader :access_token
 
-    def initialize(access_token, refresh_token = nil)
+    def initialize(access_token)
       @access_token = access_token
-      @refresh_token = refresh_token
-    end
-
-    def account
-      @account ||= Account.new(self, get("/account")["account"])
-    end
-
-    def messages(query = {})
-      load_messages("/messages", query)
-    end
-
-    def favourites(query = {})
-      load_messages("/messages/favourites", query)
-    end
-
-    def contacts(query = {})
-      load_contacts("/contacts", query)
     end
 
     def load_messages(uri, query = {})
@@ -63,7 +46,7 @@ module Hashblue
     private
 
     def request(method, path, query, body = nil)
-      options = {:query => query, :headers => request_headers}
+      options = {:query => query, :headers => self.class.headers.merge(authorization_header)}
       if body
         options[:headers]["Content-type"] = "application/json"
         options[:body] = ActiveSupport::JSON.encode(body)
@@ -76,7 +59,7 @@ module Hashblue
       end
     end
 
-    def request_headers
+    def authorization_header
       {
         "Authorization" => "OAuth #{access_token}",
       }
