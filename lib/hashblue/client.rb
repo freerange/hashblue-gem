@@ -26,6 +26,10 @@ module Hashblue
       Collection.new(self, Contact, get(uri, query), "contacts")
     end
 
+    def head(path, query = {})
+      request :head, path, query
+    end
+
     def get(path, query = {})
       request :get, path, query
     end
