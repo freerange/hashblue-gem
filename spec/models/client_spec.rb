@@ -5,12 +5,25 @@ describe Hashblue::Client do
     Hashblue::Client.new('hashblue-access-token')
   end
 
+  describe 'all requests' do
+    it 'point to api.hashblue.com' do
+      Hashblue::Client.base_uri.should == 'https://api.hashblue.com'
+    end
+
+    it 'request json responses' do
+      Hashblue::Client.headers['Accept'].should == 'application/json'
+    end
+
+    it 'include a user-agent' do
+      Hashblue::Client.headers['User-Agent'].should_not be_nil
+    end
+  end
+
   describe '#get' do
     it "makes requests with Authorization and Accept headers and passed query" do
       Hashblue::Client.expects(:get).with("/messages",
         :headers => {
-          "Authorization" => "OAuth hashblue-access-token",
-          "Accept" => "application/json"
+          "Authorization" => "OAuth hashblue-access-token"
         },
         :query => {
           :since => '2011-01-14T14:30Z'
@@ -22,8 +35,7 @@ describe Hashblue::Client do
     it "raises RequestError if response code isn't 200" do
       Hashblue::Client.expects(:get).with("/messages",
         :headers => {
-          "Authorization" => "OAuth hashblue-access-token",
-          "Accept" => "application/json"
+          "Authorization" => "OAuth hashblue-access-token"
         },
         :query => {}
       ).returns(mock(:code => 500, :inspect => ""))

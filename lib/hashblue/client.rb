@@ -9,6 +9,9 @@ module Hashblue
     include HTTParty
 
     base_uri "https://api.hashblue.com"
+    headers 'Accept' => 'application/json',
+            'User-Agent' => "Hashblue Client Gem v#{Hashblue::VERSION} (https://github.com/freerange/hashblue-gem)"
+
 
     attr_reader :access_token, :refresh_token
 
@@ -74,7 +77,9 @@ module Hashblue
     end
 
     def request_headers
-      {"Authorization" => "OAuth #{access_token}", 'Accept' => 'application/json'}
+      {
+        "Authorization" => "OAuth #{access_token}",
+      }
     end
   end
 end
