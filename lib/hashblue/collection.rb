@@ -40,4 +40,9 @@ class Hashblue::Collection
       nil
     end
   end
+
+  def each_page(&block)
+    yield self if block_given?
+    next_page.each_page(&block) if next_page?
+  end
 end

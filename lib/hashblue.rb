@@ -6,5 +6,4 @@ module Hashblue
   autoload :Message, 'hashblue/message'
   autoload :Model, 'hashblue/model'
   autoload :Version, 'hashblue/version'
-  # Your code goes here...
 end

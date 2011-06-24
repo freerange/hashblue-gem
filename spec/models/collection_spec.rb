@@ -35,6 +35,16 @@ describe Hashblue::Collection do
         subject.next_page.should be_false
       end
     end
+
+    describe '#each_page(&block)' do
+      it 'yields itself' do
+        pages = []
+        subject.each_page do |page|
+          pages << page
+        end
+        pages.should eql([subject])
+      end
+    end
   end
 
   describe "a collection with a next_page_uri" do
@@ -56,6 +66,22 @@ describe Hashblue::Collection do
         collection = mock()
         Hashblue::Collection.expects(:new).with(client, Hashblue::Contact, response, "contacts").returns(collection)
         subject.next_page.should eql(collection)
+      end
+    end
+
+    describe '#each_page(&block)' do
+      it 'yields each page in turn' do
+        subject
+        response = {"contacts" => []}
+        client.stubs(:get).with("https://api.example.com/contacts/more").returns(response)
+        collection = Hashblue::Collection.new(client, Hashblue::Contact, {"contacts" => []}, "contacts")
+        Hashblue::Collection.expects(:new).with(client, Hashblue::Contact, response, "contacts").returns(collection)
+
+        pages = []
+        subject.each_page do |page|
+          pages << page
+        end
+        pages.should eql([subject, collection])
       end
     end
   end
