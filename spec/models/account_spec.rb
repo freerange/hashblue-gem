@@ -8,7 +8,8 @@ describe Hashblue::Account do
   subject do
     Hashblue::Account.new(client, {
       'messages' => 'https://api.example.com/messages',
-      'contacts' => 'https://api.example.com/contacts'
+      'contacts' => 'https://api.example.com/contacts',
+      'favourite_messages' => 'https://api.example.com/messages/favourites'
     })
   end
 
@@ -23,6 +24,13 @@ describe Hashblue::Account do
     it "loads contacts from its contacts uri" do
       client.expects(:load_contacts).with('https://api.example.com/contacts', {}).returns([:some_contacts])
       subject.contacts.should eql([:some_contacts])
+    end
+  end
+
+  describe '#favourite_messages' do
+    it "loads messages from its favourite messages uri" do
+      client.expects(:load_messages).with('https://api.example.com/messages/favourites', {}).returns([:some_messages])
+      subject.favourite_messages.should eql([:some_messages])
     end
   end
 end

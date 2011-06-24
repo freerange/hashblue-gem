@@ -10,12 +10,20 @@ module Hashblue
       client.load_contacts(contacts_uri, query)
     end
 
+    def favourite_messages(query = {})
+      client.load_messages(favourite_messages_uri, query)
+    end
+
     def messages_uri
       @attributes["messages"]
     end
 
     def contacts_uri
       @attributes["contacts"]
+    end
+
+    def favourite_messages_uri
+      @attributes["favourite_messages"]
     end
   end
 end
