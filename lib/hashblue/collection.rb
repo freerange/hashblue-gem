@@ -5,7 +5,7 @@ class Hashblue::Collection
     @data = data
     @name = name
     @items = @data[name].collect do |item|
-      model_class.new(@client, item)
+      model_class.build(client, item)
     end
   end
 

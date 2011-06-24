@@ -6,11 +6,11 @@ describe Hashblue::Account do
   end
 
   subject do
-    Hashblue::Account.new(client, {
+    Hashblue::Account.new(
       'messages' => 'https://api.example.com/messages',
       'contacts' => 'https://api.example.com/contacts',
       'favourite_messages' => 'https://api.example.com/messages/favourites'
-    })
+    ).tap {|a| a.client = client}
   end
 
   describe '.authenticate' do
@@ -20,7 +20,7 @@ describe Hashblue::Account do
         "msisdn" => "4479001234567"
       }
       client.stubs(:get).with('/account').returns("account" => attributes)
-      Hashblue::Account.authenticate('access-token').should eql(Hashblue::Account.new(client, attributes))
+      Hashblue::Account.authenticate('access-token').should eql(Hashblue::Account.new(attributes))
     end
   end
 

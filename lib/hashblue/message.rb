@@ -3,7 +3,7 @@ module Hashblue
     attribute_methods :uri, :timestamp, :content
 
     def contact
-      @contact ||= Contact.new(client, @attributes["contact"])
+      @contact ||= Contact.build(client, @attributes["contact"])
     end
 
     def sent?

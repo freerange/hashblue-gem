@@ -6,14 +6,14 @@ describe Hashblue::Message do
   end
 
   subject do
-    Hashblue::Message.new(client, {
+    Hashblue::Message.new(
       'uri' => 'https://api.example.com/messages/abcdef123456',
       'sent' => true,
       'favourite' => false,
       'contact' => {
         'messages' => 'https://api.example.com/contacts/2/messages'
       }
-    })
+    ).tap {|m| m.client = client }
   end
 
   describe 'favourite?' do
@@ -30,9 +30,9 @@ describe Hashblue::Message do
 
   describe '#contact' do
     it "returns Contact built with contact attributes" do
-      subject.contact.should eql(Hashblue::Contact.new(client, {
+      subject.contact.should eql(Hashblue::Contact.new(
         'messages' => 'https://api.example.com/contacts/2/messages'
-      }))
+      ))
     end
   end
 

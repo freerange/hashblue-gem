@@ -13,9 +13,13 @@ describe Hashblue::Collection do
     end
 
     it "passes array methods to an array of models built from provided data" do
-      subject[0].should eql(Hashblue::Contact.new(client, {'msisdn' => 1}))
+      subject[0].should eql(Hashblue::Contact.new('msisdn' => 1))
       subject.size.should eql(3)
       subject.collect {|c| c.msisdn}.should eql([1, 2, 3])
+    end
+
+    it "sets client on each model in array" do
+      subject.collect{|c| c.client}.uniq.should eql([client])
     end
   end
 

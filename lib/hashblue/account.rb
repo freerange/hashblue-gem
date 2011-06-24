@@ -4,7 +4,7 @@ module Hashblue
       def authenticate(access_token)
         client = Hashblue::Client.new(access_token)
         response = client.get("/account")
-        Account.new(client, response["account"])
+        Account.build(client, response["account"])
       end
     end
 

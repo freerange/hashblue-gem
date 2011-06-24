@@ -6,10 +6,10 @@ describe Hashblue::Contact do
   end
 
   subject do
-    Hashblue::Contact.new(client, {
+    Hashblue::Contact.new(
       'uri' => 'https://api.example.com/contacts/abcdef123456',
-      'messages' => 'https://api.example.com/contact/1/messages',
-    })
+      'messages' => 'https://api.example.com/contact/1/messages'
+    ).tap {|c| c.client = client }
   end
 
   describe '#messages' do
